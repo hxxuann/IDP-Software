@@ -60,5 +60,7 @@ def shortest_route(A, B):
         return "Invalid start or end node."
     return bfs_path(graph, A, B)
 
+def line_tracking():
+    pass
 
 print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
