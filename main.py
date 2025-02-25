@@ -1,5 +1,9 @@
 import time
-
+from LED import turn_led_off, turn_led_on
+start = time.time()
+global location 
+location = (0,0)
+turn_led_on()
 
 def collect(point):
     #collect parcel from points ABCD
@@ -9,11 +13,14 @@ def deposit():
     #deposit parcel at depots
     pass
 
-tasks = ['A', 'B', 'C', 'D']
+tasks = [0,1,2,3]
 
-while True:
+while time.time()-start<270:
     for i in tasks:
-        if timer_expired:
+        end = time.time()
+        if end-start>270:
             break
         collect(i)
         deposit()
+        
+turn_led_off()
