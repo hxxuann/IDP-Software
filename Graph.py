@@ -1,12 +1,12 @@
 from collections import deque, defaultdict
 
-
 node_D2 = (-105, 0) # Depot 2
 node_D1 = (105, 0) # Depot 1
 node_A = (-30, 60)
 node_B = (35, 90)
 node_C = (-45, 150)
 node_D = (40, 155)
+collections_points = [node_A, node_B, node_C, node_D]
 node_O = (0, 0) # Origin/Starting point
 
 # Define the allowed movements on the grid
@@ -62,5 +62,43 @@ def shortest_route(A, B):
 
 def line_tracking():
     pass
+
+def node_to_node(start, end, next):
+    # distance = ((start[0] - end[0])**2 + (start[1] - end[1])**2)**0.5
+    line_tracking()
+    #reaches next node
+    if (junction_left.value() == 1 or junction_right.value() == 1):
+        if start[0]==next[0] or start[1]==next[1]:
+            return
+        if start[0] == end[0]:
+            if start[1] < end[1]:
+                if end[0] < next[0]:
+                    turn_right()
+                else:
+                    turn_left()
+            else:
+                if end[0] > next[0]:
+                    turn_right()
+                else:
+                    turn_left()
+        else:
+            if start[0] < end[0]:
+                if end[1] > next[1]:
+                    turn_right()
+                else:
+                    turn_left()
+            else:
+                if end[1] < next[1]:
+                    turn_right()
+                else:
+                    turn_left()
+    return 1
+    
+
+def collect(num):
+    path = shortest_route(location, collections_points[num])
+    for i in path:
+        
+
 
 print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
