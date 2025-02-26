@@ -1,4 +1,5 @@
 from collections import deque, defaultdict
+from main import location
 
 node_D2 = (-105, 0) # Depot 2
 node_D1 = (105, 0) # Depot 1
@@ -63,42 +64,51 @@ def shortest_route(A, B):
 def line_tracking():
     pass
 
-def node_to_node(start, end, next):
-    # distance = ((start[0] - end[0])**2 + (start[1] - end[1])**2)**0.5
-    line_tracking()
-    #reaches next node
-    if (junction_left.value() == 1 or junction_right.value() == 1):
-        if start[0]==next[0] or start[1]==next[1]:
-            return
-        if start[0] == end[0]:
-            if start[1] < end[1]:
-                if end[0] < next[0]:
-                    turn_right()
-                else:
-                    turn_left()
-            else:
-                if end[0] > next[0]:
-                    turn_right()
-                else:
-                    turn_left()
-        else:
-            if start[0] < end[0]:
-                if end[1] > next[1]:
-                    turn_right()
-                else:
-                    turn_left()
-            else:
-                if end[1] < next[1]:
-                    turn_right()
-                else:
-                    turn_left()
-    return 1
+def turn(direction = None):
+    pass
     
-
+# Moves from current location to input location, picks up box and pivots 180 degrees
 def collect(num):
     path = shortest_route(location, collections_points[num])
-    for i in path:
+
+    # obtains unit vector from current location to next
+    def get_direction(p1, p2):
+        dx = p2[0] - p1[0]
+        dy = p2[1] - p1[1]
+        if dx != 0:
+            return (dx // abs(dx), 0)
+        else:
+            return (0, dy // abs(dy))
+
+    # Assign index to direction: 
+    direction_order = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    direction_map = {d: idx for idx, d in enumerate(direction_order)}
+    
+    # moves to path[1]
+    prev_dir = get_direction(path[0], path[1])
+    line_tracking()
+
+    # orientate to next point, then moves forward
+    for i in range(1, len(path) - 1):
+        current_dir = get_direction(path[i], path[i+1])
         
+        prev_idx = direction_map[prev_dir]
+        current_idx = direction_map[current_dir]
+        diff = (current_idx - prev_idx) % 4
+        
+        if diff == 1:
+            turn_dir = 'right'
+        elif diff == 3:
+            turn_dir = 'left'
+        
+        turn(turn_dir)
+        line_tracking()
+
+        prev_dir = current_dir
+        
+    # Picks up block
+
+    # Turn 180 degrees
 
 
 print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
