@@ -67,10 +67,7 @@ def line_tracking():
 def turn(direction = None):
     pass
     
-# Moves from current location to input location, picks up box and pivots 180 degrees
-def collect(num):
-    path = shortest_route(location, collections_points[num])
-
+def follow_path(path):
     # obtains unit vector from current location to next
     def get_direction(p1, p2):
         dx = p2[0] - p1[0]
@@ -105,10 +102,30 @@ def collect(num):
         line_tracking()
 
         prev_dir = current_dir
+
+# Moves from current location to input location, picks up box and pivots 180 degrees
+def collect(num):
+    path = shortest_route(location, collections_points[num])
+    follow_path(path)
         
     # Picks up block
 
     # Turn 180 degrees
 
+def deposit(color):
+    #determine destination and hence path
+    if color in ['blue', 'green']:
+        path = shortest_route(location, node_D1)
+    elif color in ['yellow', 'red']:
+        path = shortest_route(location, node_D2)
+    else:
+        print("Invalid color")
+        return
+    
+    follow_path(path)
+
+    # Drop off block
+
+    # turn 180 degrees
 
 print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
