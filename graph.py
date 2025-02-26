@@ -75,7 +75,8 @@ def line_tracking():
     else:
         pass
 
-def turn(direction = None):
+def turn(direction=None):
+    # 0=right, 1=left, 2=back
     pass
     
 def follow_path(path):
@@ -105,9 +106,9 @@ def follow_path(path):
         diff = (current_idx - prev_idx) % 4
         
         if diff == 1:
-            turn_dir = 'right'
+            turn_dir = 0 #right
         elif diff == 3:
-            turn_dir = 'left'
+            turn_dir = 1 #left
         
         turn(turn_dir)
         line_tracking()
@@ -123,6 +124,7 @@ def collect(num):
     # Picks up block
 
     # Turn 180 degrees
+    turn(2)
 
 def deposit(color):
     #determine destination and hence path
@@ -139,5 +141,6 @@ def deposit(color):
     # Drop off block
 
     # turn 180 degrees
+    turn(2)
 
 print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
