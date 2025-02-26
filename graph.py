@@ -1,5 +1,11 @@
 from collections import deque, defaultdict
+from machine import Pin
 from main import location
+
+line_left = Pin(6, Pin.IN, Pin.Pull_DOWN)
+line_right = Pin(7, Pin.IN, Pin.Pull_DOWN)
+junction_left = Pin(8, Pin.IN, Pin.Pull_DOWN)
+junction_right = Pin(9, Pin.IN, Pin.Pull_DOWN)
 
 node_D2 = (-105, 0) # Depot 2
 node_D1 = (105, 0) # Depot 1
@@ -62,7 +68,12 @@ def shortest_route(A, B):
     return bfs_path(graph, A, B)
 
 def line_tracking():
-    pass
+    if line_left.value() == 1:
+        pass
+    elif line_right.value() == 1:
+        pass
+    else:
+        pass
 
 def turn(direction = None):
     pass
@@ -106,6 +117,7 @@ def follow_path(path):
 # Moves from current location to input location, picks up box and pivots 180 degrees
 def collect(num):
     path = shortest_route(location, collections_points[num])
+
     follow_path(path)
         
     # Picks up block
