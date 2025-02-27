@@ -1,5 +1,6 @@
 import time
 import threading
+from machine import Pin
 from LED import turn_led_off, turn_led_on
 from colour_detector import detect_colour
 
@@ -7,13 +8,11 @@ start = time.time()
 location = (0,0)
 turn_led_on()
 
-def collect(point):
-    #collect parcel from points ABCD
-    pass
-
-def deposit():
-    #deposit parcel at depots
-    pass
+button=Pin(12,Pin.IN)
+while True:
+    if button.value()==1:
+        #main()
+        
 
 tasks = [0,1,2,3]
 
