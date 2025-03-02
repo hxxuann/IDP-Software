@@ -1,11 +1,14 @@
 from collections import deque, defaultdict
 from machine import Pin
+from MOTOR import Motor
 from main import location
 
-line_left = Pin(6, Pin.IN, Pin.Pull_DOWN)
-line_right = Pin(7, Pin.IN, Pin.Pull_DOWN)
-junction_left = Pin(8, Pin.IN, Pin.Pull_DOWN)
-junction_right = Pin(9, Pin.IN, Pin.Pull_DOWN)
+line_left = Pin(21, Pin.IN)
+line_right = Pin(20, Pin.IN)
+junction_left = Pin(19, Pin.IN)
+junction_right = Pin(18, Pin.IN)
+
+motor=Motor()
 
 node_D2 = (-105, 0) # Depot 2
 node_D1 = (105, 0) # Depot 1
@@ -68,16 +71,17 @@ def shortest_route(A, B):
     return bfs_path(graph, A, B)
 
 def line_tracking():
-    if line_left.value() == 1:
-        pass
-    elif line_right.value() == 1:
-        pass
-    else:
-        pass
+    while True:
+        if line_left.value() == 1:
+            motor.forward(0)
+        elif line_right.value() == 1:
+            motor.forward(1)
+        else:
+            motor.forward()
+        
+        if junction_left.value() == 1 or junction_right.value() == 1:
+            return
 
-def turn(direction=None):
-    # 0=right, 1=left, 2=back
-    pass
     
 def follow_path(path):
     # obtains unit vector from current location to next
@@ -106,11 +110,10 @@ def follow_path(path):
         diff = (current_idx - prev_idx) % 4
         
         if diff == 1:
-            turn_dir = 0 #right
+            motor.right() #right
         elif diff == 3:
-            turn_dir = 1 #left
+            motor.left() #left
         
-        turn(turn_dir)
         line_tracking()
 
         prev_dir = current_dir
@@ -124,7 +127,7 @@ def collect(num):
     # Picks up block
 
     # Turn 180 degrees
-    turn(2)
+    motor.back()
 
 def deposit(color):
     #determine destination and hence path
@@ -141,6 +144,7 @@ def deposit(color):
     # Drop off block
 
     # turn 180 degrees
-    turn(2)
+    motor.back()
 
-print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
+# print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
+line_tracking()
