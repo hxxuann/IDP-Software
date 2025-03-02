@@ -1,6 +1,6 @@
 from collections import deque, defaultdict
 from machine import Pin
-from MOTOR import Motor
+from motor import Motor
 from main import location
 
 line_left = Pin(21, Pin.IN)
