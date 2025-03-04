@@ -1,7 +1,4 @@
 import time
-import board
-import busio
-import adafruit_tcs34725
 from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725
@@ -26,10 +23,8 @@ tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 12)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
 
-# i2c = busio.I2C(board.SCL, board.SDA)
-# sensor = adafruit_tcs34725.TCS34725(i2c)
 def detect_colour():
-    color = sensor.color_rgb_bytes
+    color = tcs.color_rgb_bytes
     red=color[0]
     green=color[1]
     blue=color[2]
