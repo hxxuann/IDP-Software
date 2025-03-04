@@ -1,7 +1,10 @@
 import time
+from MOTOR import Motor
 from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725
+
+motor = Motor()
 
 # colour sensor
 i2c_bus = I2C(0, sda=Pin(8), scl=Pin(9),freq=50000)
@@ -41,3 +44,10 @@ def detect_colour():
         
     # print('Color: ({0}, {1}, {2})'.format(*sensor.color_rgb_bytes))
 
+def pickup():
+    while (tof.ping()-36) > 10:
+        motor.forward_slow()
+    
+    # actuator stuff
+    
+    return
