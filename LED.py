@@ -1,5 +1,5 @@
 from machine import Pin
-import time
+from utime import sleep
 LED_PIN = 25  # according to documentation, not sure
 led = Pin(LED_PIN, Pin.OUT)
 def turn_led_on(on=True):
@@ -9,9 +9,9 @@ def turn_led_on(on=True):
     while on:
         
         led.value(1)
-        time.sleep(1)
+        sleep(1)
         led.value(0)
-        time.sleep(1)
+        sleep(1)
         
 
 def turn_led_off():
@@ -21,7 +21,7 @@ def turn_led_off():
     #         led.value(0) 
     #         print("LED is OFF now!")
     #         break
-    time.sleep(8)
+    sleep(8)
     turn_led_on(False)
     led.value(0) 
     print("LED is OFF now!")
