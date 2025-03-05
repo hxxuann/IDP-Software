@@ -2,7 +2,7 @@ import utime
 from machine import Pin
 from LED import turn_led_off, turn_led_on
 from colour_detector import detect_colour
-from graph import collect, deposit
+from graph import collect, deposit, return_home
 
 tasks = [0,1,2,3]
 
@@ -19,7 +19,8 @@ def main():
             collect(i)
             color = detect_colour()
             deposit(color)
-            
+    
+    return_home()
     turn_led_off()
 
 button=Pin(12,Pin.IN)

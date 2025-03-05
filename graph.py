@@ -172,5 +172,9 @@ def deposit(color):
     # turn 180 degrees
     motor.back()
 
+def return_home():
+    path = shortest_route(location, node_O)
+    follow_path(path)
+    
 # print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
 # line_tracking()
