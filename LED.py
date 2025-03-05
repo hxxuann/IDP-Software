@@ -5,7 +5,7 @@ led = Pin(LED_PIN, Pin.OUT)
 def turn_led_on(on=True):
     delay_time = 5
     print(f"Waiting for {delay_time} seconds before turning on the LED...")
-    time.sleep(delay_time)
+    sleep(delay_time)
     while on:
         
         led.value(1)
