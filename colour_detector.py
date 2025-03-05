@@ -32,7 +32,7 @@ tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
 
 def detect_colour():
-    color = tcs.read('raw')
+    color = html_rgb(tcs.read('raw'))
     print(color)
     red=color[0]
     green=color[1]
