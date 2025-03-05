@@ -6,7 +6,6 @@ from graph import collect, deposit, return_home
 
 tasks = [0,1,2,3]
 start = utime.time()
-location = (0,0)
 turn_led_on()
 
 def main():

@@ -1,7 +1,8 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-from main import location
+
+location = (0, 0)
 
 line_left = Pin(13, Pin.IN)
 line_right = Pin(11, Pin.IN)
@@ -111,6 +112,7 @@ def follow_path(path):
     line_tracking()
     global location
     location = path[1] 
+    led.value(1)
 
     # Iterate over all points except the first one
     for i in range(1, len(path)):
@@ -145,7 +147,7 @@ def follow_path(path):
         return
 
 # Moves from current location to input location, picks up box and pivots 180 degrees
-def collect(location, num):
+def collect(num):
     path = shortest_route(location, collections_points[num])
     
     follow_path(path)
@@ -175,6 +177,6 @@ def deposit(color):
 def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
-    
+
 # print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
 # line_tracking()
