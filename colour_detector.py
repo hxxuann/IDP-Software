@@ -2,7 +2,7 @@ import time
 from MOTOR import Motor
 from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
-from tcs34725 import TCS34725
+from tcs34725 import TCS34725, html_rgb
 
 motor = Motor()
 
@@ -27,7 +27,7 @@ tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
 
 def detect_colour():
-    color = tcs.color_rgb_bytes
+    color = html_rgb(tcs.color_rgb_bytes)
     red=color[0]
     green=color[1]
     blue=color[2]
