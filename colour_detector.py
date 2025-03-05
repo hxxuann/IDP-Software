@@ -4,6 +4,11 @@ from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
 
+# colour sensor
+i2c_bus = I2C(1, sda=Pin(18), scl=Pin(19))
+TCS34725_ADDRESS = 0x29
+print("I2C scan:", [hex(addr) for addr in i2c_bus.scan()])
+tcs = TCS34725(i2c_bus)
 motor = Motor()
 
 # colour sensor
@@ -12,9 +17,9 @@ print("I2C scan:", [hex(addr) for addr in i2c_bus.scan()])
 tcs = TCS34725(i2c_bus)
 
 # TOF sensor
-sda = Pin(8)
-scl = Pin(9)
-id = 0
+sda = Pin(18)
+scl = Pin(19)
+id = 1
 i2c = I2C(id=id, sda=sda, scl=scl)
 # Create a VL53L0X object
 tof = VL53L0X(i2c)
@@ -27,7 +32,8 @@ tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
 tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
 
 def detect_colour():
-    color = html_rgb(tcs.color_rgb_bytes)
+    color = tcs.read('raw')
+    print(color)
     red=color[0]
     green=color[1]
     blue=color[2]
@@ -42,7 +48,9 @@ def detect_colour():
     else:
         return "invalid colour"
         
-    # print('Color: ({0}, {1}, {2})'.format(*sensor.color_rgb_bytes))
+print(detect_colour())
+
+    
 
 def pickup():
     while (tof.ping()-36) > 10:
