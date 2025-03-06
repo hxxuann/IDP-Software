@@ -1,5 +1,5 @@
 from machine import Pin, PWM
-from utime import sleep
+from utime import sleep	
 
 class Motor:
     def __init__(self):
@@ -47,26 +47,19 @@ class Motor:
         self.m1Dir.value(0)
         self.m2Dir.value(0)
         self.pwm1.duty_u16(int(65535*90/100))
-        self.pwm2.duty_u16(int(65535*20/100))
-        sleep(2)
-        self.pwm1.duty_u16(0)
-        self.pwm2.duty_u16(0)
+        self.pwm2.duty_u16(int(65535*30/100))
+
     
     def left(self):
         self.m1Dir.value(0)
         self.m2Dir.value(0)
-        self.pwm1.duty_u16(int(65535*20/100))
+        self.pwm1.duty_u16(int(65535*30/100))
         self.pwm2.duty_u16(int(65535*90/100))
-        sleep(2)
-        self.pwm1.duty_u16(0)
-        self.pwm2.duty_u16(0)
+
     
     def back(self):
         self.m1Dir.value(0)
         self.m2Dir.value(1)
         self.pwm1.duty_u16(int(65535*80/100))
         self.pwm2.duty_u16(int(65535*80/100))
-        sleep(1.5)
-        self.pwm1.duty_u16(0)
-        self.pwm2.duty_u16(0)
 

@@ -125,9 +125,15 @@ def follow_path(path):
             diff = (current_idx - prev_idx) % 4
             
             if diff == 1:
-                motor.right()  # Turn right
+                while True:
+                    motor.right()  # Turn right
+                    if line_left.value()==1:
+                        break
             elif diff == 3:
-                motor.left()   # Turn left
+                while True:
+                    motor.left()   # Turn left
+                    if line_right.value()==1:
+                        break
             return 
 
         current_dir = get_direction(path[i], path[i+1])
@@ -137,12 +143,18 @@ def follow_path(path):
         diff = (current_idx - prev_idx) % 4
         
         if diff == 1:
-            motor.right()  # Turn right
+            while True:
+                motor.right()  # Turn right
+                if line_left.value()==1:
+                    break
         elif diff == 3:
-            motor.left()   # Turn left
+            while True:
+                motor.left()   # Turn left
+                if line_right.value()==1:
+                    break
         
         line_tracking()
-        location = path[i+1]
+        location = path[i]
         prev_dir = current_dir
 
 # Moves from current location to input location, picks up box and pivots 180 degrees
@@ -152,7 +164,10 @@ def collect(num):
     follow_path(path)
         
     # Picks up block
-
+    motor.forward()
+    utime.sleep(0.2)
+    motor.reverse()
+    utime.sleep(0.1)
     # Turn 180 degrees
     motor.back()
 
@@ -169,13 +184,18 @@ def deposit(color):
     follow_path(path)
 
     # Drop off block
-    
+    motor.forward()
+    utime.sleep(0.3)
+    motor.reverse()
+    utime.sleep(0.3)
+
     # turn 180 degrees
     motor.back()
+    motor.forward()
+    utime.sleep(0.2)
 
 def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
 
-# print("Shortest path from", node_D2, "to", node_D, ":", shortest_route(node_D2, node_D))
-# line_tracking()
+
