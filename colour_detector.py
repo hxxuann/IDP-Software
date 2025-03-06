@@ -4,9 +4,10 @@ from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
 from time import sleep_ms
+from config import colour_sda, colour_scl, tof_scl, tof_sda
 
 # colour sensor
-i2c_bus = I2C(1, sda=Pin(18), scl=Pin(19))
+i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
 TCS34725_ADDRESS = 0x29
 print("I2C scan:", [hex(addr) for addr in i2c_bus.scan()])
 tcs = TCS34725(i2c_bus)
@@ -21,19 +22,16 @@ def scan_sensor(i2c_bus):
         return False
 
 # TOF sensor
-#sda = Pin(18)
-#scl = Pin(19)
-#id = 1
-#i2c = I2C(id=id, sda=sda, scl=scl)
-# Create a VL53L0X object
-#tof = VL53L0X(i2c)
-#budget = tof.measurement_timing_budget_us
-# print("Budget was:", budget)
-# tof.set_measurement_timing_budget(40000)
-# tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
-# tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 12)
-# tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
-# tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
+
+i2c = I2C(1, sda=tof_sda, scl=tof_scl)
+tof = VL53L0X(i2c)
+budget = tof.measurement_timing_budget_us
+print("Budget was:", budget)
+tof.set_measurement_timing_budget(40000)
+tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 18)
+tof.set_Vcsel_pulse_period(tof.vcsel_period_type[0], 12)
+tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 14)
+tof.set_Vcsel_pulse_period(tof.vcsel_period_type[1], 8)
 
         
 

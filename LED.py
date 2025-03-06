@@ -1,7 +1,7 @@
 from machine import Pin
 from utime import sleep
-LED_PIN = 25  # according to documentation, not sure
-led = Pin(LED_PIN, Pin.OUT)
+from config import led
+
 def turn_led_on(on=True):
     led.value(0)
     delay_time = 5

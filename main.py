@@ -4,6 +4,7 @@ from MOTOR import Motor
 from LED import turn_led_off, turn_led_on
 from colour_detector import detect_colour
 from graph import collect, deposit, return_home
+from config import button
 
 tasks = 4
 test_color = ['blue', 'red']
@@ -28,7 +29,7 @@ def main():
     return_home()
     turn_led_off()
 
-button=Pin(12,Pin.IN)
+# button=Pin(12,Pin.IN)
 while True:
     if button.value()==1:
         main()
