@@ -1,7 +1,7 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-from config import line_left,line_right,junction_left,junction_right
+from config import line_left,line_right,junction_left,junction_right, led
 location = (0, 0)
 
 # line_left = Pin(13, Pin.IN)
@@ -197,5 +197,6 @@ def deposit(color):
 def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
-
-
+    
+    motor.forward()
+    utime.sleep(0.2)

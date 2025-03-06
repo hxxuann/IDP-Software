@@ -15,6 +15,10 @@ motor=Motor()
 turn_led_on()
 
 def main():
+    #wait for button to start
+    while button.read() == 0: 
+        pass
+
     motor.forward()
     utime.sleep(0.5)
     while utime.time()-start<270:
@@ -29,9 +33,5 @@ def main():
     return_home()
     turn_led_off()
 
-# button=Pin(12,Pin.IN)
-while True:
-    if button.value()==1:
-        main()
-        
-
+if __name__ == "__main__":
+    main()
