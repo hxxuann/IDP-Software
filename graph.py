@@ -112,7 +112,7 @@ def follow_path(path):
     line_tracking()
     global location
     location = path[1] 
-    led.value(1)
+#     led.value(1)
 
     # Iterate over all points except the first one
     for i in range(1, len(path)):
@@ -144,12 +144,11 @@ def follow_path(path):
         line_tracking()
         location = path[i+1]
         prev_dir = current_dir
-        return
 
 # Moves from current location to input location, picks up box and pivots 180 degrees
 def collect(num):
     path = shortest_route(location, collections_points[num])
-    
+    print(path)
     follow_path(path)
         
     # Picks up block
