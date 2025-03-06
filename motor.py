@@ -1,12 +1,12 @@
 from machine import Pin, PWM
 from utime import sleep
-
+from config import m1Dir, m2Dir, pwm1, pwm2
 class Motor:
     def __init__(self):
-        self.m1Dir = Pin(4, Pin.OUT) # set pin left wheel 7
-        self.m2Dir = Pin(7, Pin.OUT)
-        self.pwm1 = PWM(Pin(5))
-        self.pwm2 = PWM(Pin(6))
+        self.m1Dir = m1Dir
+        self.m2Dir = m2Dir
+        self.pwm1 = PWM(pwm1)
+        self.pwm2 = PWM(pwm2)
         self.pwm1.freq(1000)
         self.pwm2.freq(1000)
         self.pwm1.duty_u16(0)

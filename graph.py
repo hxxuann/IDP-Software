@@ -1,13 +1,13 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-
+from config import line_left,line_right,junction_left,junction_right
 location = (0, 0)
 
-line_left = Pin(13, Pin.IN)
-line_right = Pin(11, Pin.IN)
-junction_left = Pin(12, Pin.IN)
-junction_right = Pin(10, Pin.IN)
+# line_left = Pin(13, Pin.IN)
+# line_right = Pin(11, Pin.IN)
+# junction_left = Pin(12, Pin.IN)
+# junction_right = Pin(10, Pin.IN)
 
 motor=Motor()
 
