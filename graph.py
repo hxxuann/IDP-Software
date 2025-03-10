@@ -78,6 +78,7 @@ def shortest_route(A, B):
 
 def line_tracking():
     global last_junction_time
+    debounce_time = 200  # milliseconds
     while True:
         if line_left.value() == 1:
             motor.forward(0)
@@ -87,10 +88,10 @@ def line_tracking():
             motor.forward()
         
         if junction_left.value() == 1 or junction_right.value() == 1:
-#             current_time = utime.ticks_ms()  
-#             if utime.ticks_diff(current_time, last_junction_time) >= 200:
-#                 last_junction_time = current_time
-            return
+            current_time = utime.ticks_ms()
+            if utime.ticks_diff(current_time, last_junction_time) >= debounce_time:
+                last_junction_time = current_time
+                return
 
     
 def follow_path(path):
@@ -112,13 +113,13 @@ def follow_path(path):
     line_tracking()
     global location
     location = path[1] 
-    led.value(1)
+    # led.value(1)
 
     # Iterate over all points except the first one
     for i in range(1, len(path)):
-        if i == len(path) - 1:
+        if i == len(path) - 2:
             # Last node: turn but do not move
-            current_dir = get_direction(path[i-1], path[i])
+            current_dir = get_direction(path[i], path[i+1])
             
             prev_idx = direction_map[prev_dir]
             current_idx = direction_map[current_dir]
@@ -128,12 +129,16 @@ def follow_path(path):
                 while True:
                     motor.right()  # Turn right
                     if line_left.value()==1:
-                        break
+                        motor.left()
+                        if line_right.value()==1:
+                            break
             elif diff == 3:
                 while True:
                     motor.left()   # Turn left
                     if line_right.value()==1:
-                        break
+                        motor.right()
+                        if line_left.value()==1:
+                            break
             return 
 
         current_dir = get_direction(path[i], path[i+1])
@@ -146,12 +151,16 @@ def follow_path(path):
             while True:
                 motor.right()  # Turn right
                 if line_left.value()==1:
-                    break
+                    motor.left()
+                    if line_right.value()==1:
+                        break
         elif diff == 3:
             while True:
                 motor.left()   # Turn left
                 if line_right.value()==1:
-                    break
+                    motor.right()
+                    if line_left.value()==1:
+                        break
         
         line_tracking()
         location = path[i]
@@ -197,6 +206,5 @@ def deposit(color):
 def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
-    
     motor.forward()
     utime.sleep(0.2)
