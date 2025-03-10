@@ -1,10 +1,9 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-from LED import turn_led_off, turn_led_on
 from colour_detector import detect_colour
 from graph import collect, deposit, return_home
-from config import button
+from config import button,led
 
 tasks = 4
 test_color = ['blue', 'red']
@@ -12,7 +11,6 @@ start = utime.time()
 
 motor=Motor()
 
-turn_led_on()
 
 def main():
     #wait for button to start
@@ -31,7 +29,7 @@ def main():
             deposit(test_color[i%2])
     
     return_home()
-    turn_led_off()
+    led.value(0)
 
 if __name__ == "__main__":
     main()
