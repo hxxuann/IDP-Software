@@ -175,10 +175,10 @@ def collect(num):
     print("finish path")
         
     # Picks up block
-    motor.forward_slow()
-    utime.sleep(1)
+    motor.forward()
+    utime.sleep(0.5)
     motor.reverse()
-    utime.sleep(0.3)
+    utime.sleep(0.5)
     # Turn 180 degrees
     motor.back()
     motor.reverse()
