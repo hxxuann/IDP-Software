@@ -10,6 +10,7 @@ location = (0, 0)
 # junction_right = Pin(10, Pin.IN)
 
 motor=Motor()
+last_junction_time = utime.ticks_ms()
 
 node_D2 = (-105, 0) # Depot 2
 node_D1 = (105, 0) # Depot 1
@@ -97,23 +98,25 @@ def turn(diff):
 
     if diff == 1:
         #Turn right
-        while line_right.value()==0:
-            motor.forward()
-        
-        while junction_left.value()==0:
-            motor.right()
-            if line_left.value()==1:
-                return
+        motor.forward()
+        utime.sleep(0.03)
+        motor.right()
+        utime.sleep(1.3)
+        while line_left.value()==0:
+            pass
+        motor.off()
+        return
 
     elif diff == 3:
         #Turn left
-        while line_left.value()==0:
-            motor.forward()
-        
-        while junction_right.value()==0:
-            motor.left()
-            if line_right.value()==1:
-                return
+        motor.forward()
+        utime.sleep(0.03)
+        motor.left()
+        utime.sleep(1.3)
+        while line_right.value()==0:
+            pass
+        motor.off()
+        return
     
 def follow_path(path):
     # Helper function to get unit direction from p1 to p2
@@ -131,7 +134,9 @@ def follow_path(path):
     
     # Move to path[1] initially
     prev_dir = get_direction(path[0], path[1])
+    print("start line tracking 1")
     line_tracking()
+    print("finish line tracking 1")
     global location
     location = path[1] 
     # led.value(1)
@@ -155,7 +160,7 @@ def follow_path(path):
         prev_idx = direction_map[prev_dir]
         current_idx = direction_map[current_dir]
         diff = (current_idx - prev_idx) % 4
-        
+        print(diff)
         turn(diff)
         
         line_tracking()
@@ -167,14 +172,17 @@ def collect(num):
     path = shortest_route(location, collections_points[num])
     print(path)
     follow_path(path)
+    print("finish path")
         
     # Picks up block
-    motor.forward()
-    utime.sleep(0.2)
+    motor.forward_slow()
+    utime.sleep(1)
     motor.reverse()
-    utime.sleep(0.1)
+    utime.sleep(0.3)
     # Turn 180 degrees
     motor.back()
+    motor.reverse()
+    utime.sleep(0.3)    
 
 def deposit(color):
     #determine destination and hence path
