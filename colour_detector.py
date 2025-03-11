@@ -1,11 +1,11 @@
-import time
+import utime
 from MOTOR import Motor
 from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
 from time import sleep_ms
 from config import colour_sda, colour_scl, tof_scl, tof_sda
-
+from graph import deposit
 # colour sensor
 i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
 TCS34725_ADDRESS = 0x29
@@ -82,9 +82,18 @@ def detect_colour():
         return "invalid colour"    
 
 def pickup():
-    while (tof.ping()-36) > 10:
+    while (tof.ping()-36) > 15:
         motor.forward_slow()
+    colour = detect_colour()
     
-    # actuator stuff
-    
-    return
+    # servo stuff
+    servo_pin = machine.Pin(15)
+    servo = PWM(servo_pin)
+    # Set Duty Cycle for Different Angles
+    max_duty = 7864
+    min_duty = 1802
+    half_duty = int(max_duty/2)
+    #Set PWM frequency
+    frequency = 50
+    servo.freq (frequency)
+    return colour
