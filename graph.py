@@ -93,6 +93,27 @@ def line_tracking():
                 last_junction_time = current_time
                 return
 
+def turn(diff):
+
+    if diff == 1:
+        #Turn right
+        while line_right.value()==0:
+            motor.forward()
+        
+        while junction_left.value()==0:
+            motor.right()
+            if line_left.value()==1:
+                return
+
+    elif diff == 3:
+        #Turn left
+        while line_left.value()==0:
+            motor.forward()
+        
+        while junction_right.value()==0:
+            motor.left()
+            if line_right.value()==1:
+                return
     
 def follow_path(path):
     # Helper function to get unit direction from p1 to p2
@@ -125,21 +146,9 @@ def follow_path(path):
             current_idx = direction_map[current_dir]
             diff = (current_idx - prev_idx) % 4
             
-            if diff == 1:
-                while True:
-                    motor.right()  # Turn right
-                    if line_left.value()==1:
-                        motor.left()
-                        if line_right.value()==1:
-                            break
-            elif diff == 3:
-                while True:
-                    motor.left()   # Turn left
-                    if line_right.value()==1:
-                        motor.right()
-                        if line_left.value()==1:
-                            break
-            return 
+            turn(diff)
+            return
+    
 
         current_dir = get_direction(path[i], path[i+1])
         
@@ -147,20 +156,7 @@ def follow_path(path):
         current_idx = direction_map[current_dir]
         diff = (current_idx - prev_idx) % 4
         
-        if diff == 1:
-            while True:
-                motor.right()  # Turn right
-                if line_left.value()==1:
-                    motor.left()
-                    if line_right.value()==1:
-                        break
-        elif diff == 3:
-            while True:
-                motor.left()   # Turn left
-                if line_right.value()==1:
-                    motor.right()
-                    if line_left.value()==1:
-                        break
+        turn(diff)
         
         line_tracking()
         location = path[i]
