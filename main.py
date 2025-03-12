@@ -26,9 +26,8 @@ def main():
             print(end-start)
             if end-start>270:
                 break
-            collect(i)
-            # color = detect_colour()
-            deposit(test_color[i%2])
+            color = collect(i)
+            deposit(color)
     
     return_home()
     led.value(0)

@@ -144,7 +144,7 @@ def follow_path(path):
     line_tracking()
     global location
     location = path[1] 
-    # led.value(1)
+    led.value(1)
 
     # Iterate over all points except the first one
     for i in range(1, len(path)):
