@@ -1,11 +1,9 @@
 import utime
 from MOTOR import Motor
-from machine import Pin, PWM, I2C, ADC
+from machine import PWM, I2C
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
-from time import sleep_ms
 from config import colour_sda, colour_scl, tof_scl, tof_sda, servo_pin
-from graph import deposit
 # colour sensor
 i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
 TCS34725_ADDRESS = 0x29
