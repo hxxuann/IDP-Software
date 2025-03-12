@@ -69,10 +69,11 @@ def detect_colour():
         return "red"
     elif blue > 20:
         return "blue"
-    elif green > 10 and blue>10:
-        return "green"
+    # elif green > 10 and blue>10:
+    #     return "green"
     else:
-        return "invalid colour"    
+        return "green"
+        # return "invalid colour"    
 servo = PWM(servo_pin)
 #Set PWM frequency
 servo.freq (50)
