@@ -98,9 +98,7 @@ def line_tracking():
 def turn(diff):
 
     if diff == 1:
-        #Turn right
-        motor.forward()
-        utime.sleep(0.03)
+
         motor.right()
         utime.sleep(1.3)
         while line_left.value()==0:
@@ -109,9 +107,6 @@ def turn(diff):
         return
 
     elif diff == 3:
-        #Turn left
-        motor.forward()
-        utime.sleep(0.03)
         motor.left()
         utime.sleep(1.3)
         while line_right.value()==0:
@@ -146,9 +141,7 @@ def follow_path(path):
     
     # Move to path[1] initially
     prev_dir = get_direction(path[0], path[1])
-    print("start line tracking 1")
     line_tracking()
-    print("finish line tracking 1")
     global location
     location = path[1] 
     # led.value(1)
@@ -166,7 +159,15 @@ def follow_path(path):
             turn(diff)
             line_tracking()
             motor.off()
-            return
+            while True:
+                if junction_right.value()==1:
+                    while junction_left.value()==0:
+                        motor.right()
+                if junction_left.value()==1:
+                    while junction_right.value()==0:
+                        motor.left()
+                motor.off()
+                return
     
 
         current_dir = get_direction(path[i], path[i+1])
@@ -190,16 +191,17 @@ def collect(num):
         
     # Picks up block
     motor.forward()
-    utime.sleep(0.5)
+    utime.sleep(0.2)
     motor.reverse()
     utime.sleep(0.5)
 
     color = pickup()
 
     # Turn 180 degrees
-    motor.back()
+    turn(4)
     motor.reverse()
-    utime.sleep(0.3)    
+    utime.sleep(0.3)
+    motor.off()
     
     return color
 

@@ -16,15 +16,14 @@ servo.freq (50)
 #Servo at a degree
 servo.duty_u16(1900)
 
+
 def main():
-    #wait for button to start
-    while button.read() == 0: 
-        pass
     motor.forward()
     utime.sleep(0.5)
     while utime.time()-start<270:
         for i in range(tasks):
             end = utime.time()
+            print(end-start)
             if end-start>270:
                 break
             collect(i)
@@ -34,5 +33,16 @@ def main():
     return_home()
     led.value(0)
 
-if __name__ == "__main__":
-    main()
+    
+
+try:
+    while True:
+        if button.value()==1:
+            main()
+# except Exception as e:
+#     print(e)
+#     led.value(0)
+#     motor.off()
+except:
+    led.value(0)
+    motor.off()
