@@ -188,7 +188,6 @@ def collect(num):
     path = shortest_route(location, collections_points[num])
     print(path)
     follow_path(path)
-    print("finish path")
         
     # Picks up block
     color = pickup()
@@ -216,6 +215,7 @@ def deposit(color):
         print("Invalid color")
         return
     
+    print(path)
     follow_path(path)
 
     # Drop off block
