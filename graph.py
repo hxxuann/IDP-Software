@@ -118,6 +118,17 @@ def turn(diff):
         motor.off()
         return
     
+    elif diff == 4:
+        #Pivot back
+        motor.back()
+        utime.sleep(1.3)
+        while line_left.value()==0:
+            pass
+        motor.off()
+        return  
+        
+
+    
 def follow_path(path):
     # Helper function to get unit direction from p1 to p2
     def get_direction(p1, p2):

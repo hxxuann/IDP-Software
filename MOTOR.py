@@ -56,6 +56,3 @@ class Motor:
         self.m2Dir.value(1)
         self.pwm1.duty_u16(int(65535*80/100))
         self.pwm2.duty_u16(int(65535*80/100))
-        sleep(1.9)
-        self.pwm1.duty_u16(0)
-        self.pwm2.duty_u16(0)
