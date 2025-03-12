@@ -1,6 +1,7 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
+from colour_detector import pickup
 from config import line_left,line_right,junction_left,junction_right, led
 location = (0, 0)
 
@@ -163,6 +164,8 @@ def follow_path(path):
             diff = (current_idx - prev_idx) % 4
             
             turn(diff)
+            line_tracking()
+            motor.off()
             return
     
 
@@ -190,10 +193,15 @@ def collect(num):
     utime.sleep(0.5)
     motor.reverse()
     utime.sleep(0.5)
+
+    color = pickup()
+
     # Turn 180 degrees
     motor.back()
     motor.reverse()
     utime.sleep(0.3)    
+    
+    return color
 
 def deposit(color):
     #determine destination and hence path
@@ -222,4 +230,4 @@ def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
     motor.forward()
-    utime.sleep(0.2)
+    utime.sleep(0.5)
