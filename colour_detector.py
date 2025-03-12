@@ -88,7 +88,7 @@ def pickup():
     #Servo at a degree
     servo.duty_u16(2000)
     utime.sleep(2)
-    servo.duty_u16(2200)
+    servo.duty_u16(2400)
     utime.sleep(2)
     return colour
 print(pickup())

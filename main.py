@@ -14,7 +14,7 @@ servo = PWM(servo_pin)
 #Set PWM frequency
 servo.freq (50)
 #Servo at a degree
-servo.duty_u16(1900)
+servo.duty_u16(2000)
 
 
 def main():
