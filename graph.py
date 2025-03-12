@@ -1,7 +1,7 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-from colour_detector import pickup
+from colour_detector import pickup, dropoff
 from config import line_left,line_right,junction_left,junction_right, led
 location = (0, 0)
 
@@ -190,12 +190,12 @@ def collect(num):
     print("finish path")
         
     # Picks up block
-    motor.forward()
-    utime.sleep(0.2)
-    motor.reverse()
-    utime.sleep(0.5)
-
     color = pickup()
+
+    # Reverse before pivoting for block C and D
+    if num in [0,1]:
+        motor.reverse()
+        utime.sleep(1)
 
     # Turn 180 degrees
     turn(4)
@@ -218,15 +218,12 @@ def deposit(color):
     follow_path(path)
 
     # Drop off block
-    motor.forward()
-    utime.sleep(0.3)
-    motor.reverse()
-    utime.sleep(0.3)
+    dropoff()
 
     # turn 180 degrees
-    motor.back()
-    motor.forward()
-    utime.sleep(0.2)
+    motor.reverse()
+    utime.sleep(1)
+    turn(4)
 
 def return_home():
     path = shortest_route(location, node_O)
