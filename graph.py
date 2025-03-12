@@ -19,7 +19,7 @@ node_A = (-30, 60)
 node_B = (35, 90)
 node_C = (-45, 150)
 node_D = (40, 155)
-collections_points = [node_A, node_B, node_C, node_D]
+collections_points = [node_C, node_D, node_A, node_B]
 node_O = (0, 0) # Origin/Starting point
 
 # Define the allowed movements on the grid

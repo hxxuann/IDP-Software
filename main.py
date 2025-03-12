@@ -19,7 +19,7 @@ servo.duty_u16(2000)
 
 def main():
     motor.forward()
-    utime.sleep(0.5)
+    utime.sleep(1)
     while utime.time()-start<270:
         for i in range(tasks):
             end = utime.time()
