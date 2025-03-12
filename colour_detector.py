@@ -66,19 +66,14 @@ def detect_colour():
     green=color[1]
     blue=color[2]
     if red > 10 and green > 20 and blue<10:
-#         print('yellow')
         return "yellow"
     elif red > 20:
-#         print('red')
         return "red"
     elif blue > 20:
-#         print('blue')
         return "blue"
     elif green > 10 and blue>10:
-#         print('green')
         return "green"
     else:
-#         print('invalid')
         return "invalid colour"    
 
 def pickup():
@@ -89,11 +84,10 @@ def pickup():
     # servo stuff
     servo_pin = machine.Pin(15)
     servo = PWM(servo_pin)
-    # Set Duty Cycle for Different Angles
-    max_duty = 7864
-    min_duty = 1802
-    half_duty = int(max_duty/2)
     #Set PWM frequency
     frequency = 50
     servo.freq (frequency)
+    #Servo at a degree
+    servo.duty_u16(2002)
+    utime.sleep(2)
     return colour
