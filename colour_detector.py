@@ -4,7 +4,7 @@ from machine import Pin, PWM, I2C, ADC
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
 from time import sleep_ms
-from config import colour_sda, colour_scl, tof_scl, tof_sda
+from config import colour_sda, colour_scl, tof_scl, tof_sda, servo_pin
 from graph import deposit
 # colour sensor
 i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
@@ -23,7 +23,7 @@ def scan_sensor(i2c_bus):
 
 # TOF sensor
 
-i2c = I2C(1, sda=tof_sda, scl=tof_scl)
+i2c = I2C(0, sda=tof_sda, scl=tof_scl)
 tof = VL53L0X(i2c)
 budget = tof.measurement_timing_budget_us
 print("Budget was:", budget)
@@ -75,19 +75,21 @@ def detect_colour():
         return "green"
     else:
         return "invalid colour"    
-
+servo = PWM(servo_pin)
+#Set PWM frequency
+servo.freq (50)
+#Servo at a degree
+servo.duty_u16(2000)
 def pickup():
-    while (tof.ping()-36) > 15:
+    while (tof.ping()-36) > 5:
+        print(tof.ping()-36)
         motor.forward_slow()
     colour = detect_colour()
-    
-    # servo stuff
-    servo_pin = machine.Pin(15)
-    servo = PWM(servo_pin)
-    #Set PWM frequency
-    frequency = 50
-    servo.freq (frequency)
+    motor.off()
     #Servo at a degree
-    servo.duty_u16(2002)
+    servo.duty_u16(2000)
+    utime.sleep(2)
+    servo.duty_u16(2200)
     utime.sleep(2)
     return colour
+print(pickup())
