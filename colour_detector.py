@@ -91,4 +91,6 @@ def pickup():
     servo.duty_u16(2400)
     utime.sleep(2)
     return colour
-print(pickup())
+
+def dropoff():
+    servo.duty_u16(2000)
