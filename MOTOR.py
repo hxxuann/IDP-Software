@@ -34,8 +34,8 @@ class Motor:
     def forward_slow(self):
         self.m1Dir.value(0)
         self.m2Dir.value(0)
-        self.pwm1.duty_u16(int(65535*30/100))
-        self.pwm2.duty_u16(int(65535*30/100))        
+        self.pwm1.duty_u16(int(65535*40/100))
+        self.pwm2.duty_u16(int(65535*40/100))        
             
     def reverse(self):
         self.m1Dir.value(1)
