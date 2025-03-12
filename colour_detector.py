@@ -65,7 +65,7 @@ def detect_colour():
     blue=color[2]
     if red > 10 and green > 20 and blue<10:
         return "yellow"
-    elif red > 20:
+    elif red > 30:
         return "red"
     elif blue > 20:
         return "blue"
