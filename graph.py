@@ -158,6 +158,7 @@ def follow_path(path):
             
             turn(diff)
             line_tracking()
+            location = path[-1]
             motor.off()
             while True:
                 if junction_right.value()==1:
