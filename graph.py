@@ -1,7 +1,7 @@
 import utime
 from machine import Pin
 from MOTOR import Motor
-from colour_detector import pickup, dropoff
+from colour_detector import pickup, dropoff, liftup
 from config import line_left,line_right,junction_left,junction_right, led
 location = (0, 0)
 
@@ -95,33 +95,57 @@ def line_tracking():
                 last_junction_time = current_time
                 return
 
-def turn(diff):
+def turn(diff, last=False):
 
     if diff == 1:
-        # Right Turn
-        motor.right()
-        utime.sleep(1.3)
-        while line_left.value()==0:
-            pass
-        # Left pivot
-        motor.pivot(1)
-        while line_right.value()==0:
-            pass
-        motor.off()
-        return
+        if last==True:
+            # Right Turn
+            motor.right()
+            utime.sleep(1.3)
+            while line_left.value()==0:
+                pass
+            # Left pivot
+            motor.right(1)
+            utime.sleep(0.3)
+            motor.off()
+            return
+        else:
+            # Right Turn
+            motor.right()
+            utime.sleep(1.3)
+            while line_left.value()==0:
+                pass
+            # Left pivot
+            motor.left(0)
+            while line_right.value()==0:
+                pass
+            motor.off()
+            return
 
     elif diff == 3:
-        # Left Turn
-        motor.left()
-        utime.sleep(1.3)
-        while line_right.value()==0:
-            pass
-        # Right pivot
-        motor.pivot(0)
-        while line_left.value()==0:
-            pass
-        motor.off()
-        return
+        if last==True:
+            # Left Turn
+            motor.left()
+            utime.sleep(1.3)
+            while line_right.value()==0:
+                pass
+            # Right pivot
+            motor.left(1)
+            utime.sleep(0.3)
+            motor.off()
+            return
+        else:
+            # Left Turn
+            motor.left()
+            utime.sleep(1.3)
+            while line_right.value()==0:
+                pass
+            # Right pivot
+            motor.right(0)
+            while line_left.value()==0:
+                pass
+            motor.off()
+            return
     
     elif diff == 4:
         # Pivot 180 degrees
@@ -165,9 +189,11 @@ def follow_path(path):
             current_idx = direction_map[current_dir]
             diff = (current_idx - prev_idx) % 4
             
-            turn(diff)
+            turn(diff, last=True)
             motor.reverse()
-            utime.sleep(0.5)
+            utime.sleep(0.3)
+            motor.off()
+            utime.sleep(0.2)
             line_tracking()
             location = path[-1]
             motor.off()
@@ -196,6 +222,10 @@ def collect(num):
     color = pickup()
 
     # Turn 180 degrees
+    if collections_points[num] in [node_C, node_D]:
+        motor.reverse()
+        utime.sleep(0.5)
+        motor.off()
     turn(4)
     motor.reverse()
     utime.sleep(0.3)
@@ -223,6 +253,7 @@ def deposit(color):
     motor.reverse()
     utime.sleep(1)
     turn(4)
+    liftup()
 
 def return_home():
     # Move from current location to home

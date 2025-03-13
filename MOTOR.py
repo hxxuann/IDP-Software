@@ -43,16 +43,20 @@ class Motor:
         self.pwm1.duty_u16(int(65535*80/100))
         self.pwm2.duty_u16(int(65535*80/100))
 
-    def right(self):
-        self.m1Dir.value(0)
-        self.m2Dir.value(0)
+    def right(self,dir=0):
+        # Dir: 0 Forward turn, 1 Backward turn
+        self.m1Dir.value(dir)
+        self.m2Dir.value(dir)
         self.pwm1.duty_u16(int(65535*100/100))
         self.pwm2.duty_u16(int(65535*0/100))
 
+
+
     
-    def left(self):
-        self.m1Dir.value(0)
-        self.m2Dir.value(0)
+    def left(self, dir=0):
+        # Dir: 0 Forward turn, 1 Backward turn
+        self.m1Dir.value(dir)
+        self.m2Dir.value(dir)
         self.pwm1.duty_u16(int(65535*0/100))
         self.pwm2.duty_u16(int(65535*100/100))
 
