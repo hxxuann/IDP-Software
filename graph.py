@@ -105,8 +105,7 @@ def turn(diff, last=False):
             pass
         # Left pivot
         motor.left(0)
-        while line_right.value()==0:
-            pass
+        utime.sleep(0.3)
         motor.off()
         return
 
@@ -118,8 +117,7 @@ def turn(diff, last=False):
             pass
         # Right pivot
         motor.right(0)
-        while line_left.value()==0:
-            pass
+        utime.sleep(0.3)
         motor.off()
         return
     
@@ -198,18 +196,19 @@ def collect(num):
     print(path)
     follow_path(path)
     motor.reverse()
-    utime.sleep(0.7)
+    utime.sleep(1)
+    motor.off()
     # Picks up block
     color = pickup()
 
     # Turn 180 degrees
-    if collections_points[num] in [node_C, node_D]:
-        motor.reverse()
-        utime.sleep(0.5)
-        motor.off()
-    turn(4)
+
     motor.reverse()
     utime.sleep(0.3)
+    motor.off()
+    turn(4)
+    motor.reverse()
+    utime.sleep(1)
     motor.off()
     
     return color
@@ -228,6 +227,8 @@ def deposit(color):
     
     print(path)
     follow_path(path)
+    motor.forward()
+    utime.sleep(0.5)
     line_tracking()
 
     # Drop off block
@@ -235,7 +236,7 @@ def deposit(color):
 
     # Turn 180 degrees
     motor.reverse()
-    utime.sleep(1)
+    utime.sleep(0.5)
     turn(dir)
     liftup()
 

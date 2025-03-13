@@ -3,7 +3,7 @@ from MOTOR import Motor
 from machine import PWM, I2C
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
-from config import colour_sda, colour_scl, tof_scl, tof_sda, servo_pin
+from config import colour_sda, colour_scl, tof_scl, tof_sda, servo_pin, line_left, line_right
 # colour sensor
 i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
 TCS34725_ADDRESS = 0x29
@@ -63,9 +63,9 @@ def detect_colour():
     red=color[0]
     green=color[1]
     blue=color[2]
-    if red > 10 and green > 20 and blue<10:
+    if red > 5 and green > 20 and blue<10:
         return "yellow"
-    elif red > 30:
+    elif red > 15:
         return "red"
     elif blue > 20:
         return "blue"
@@ -83,14 +83,23 @@ servo.duty_u16(3800)
 def pickup():
     servo.duty_u16(2000)
     utime.sleep(1)
-    while (tof.ping()-36) > 5:
+    motor.forward_slow()
+    utime.sleep(0.5)
+    print(tof.ping()-36)
+    while (tof.ping()-36) > 8:
         print(tof.ping()-36)
-        motor.forward_slow()
-    colour = detect_colour()
+        if line_left.value() == 1:
+            motor.forward_slow(0)
+        elif line_right.value() == 1:
+            motor.forward_slow(1)
+        else:
+            motor.forward_slow()
     motor.off()
-    #Servo at a degree
     servo.duty_u16(2400)
     utime.sleep(1)
+    colour = detect_colour()
+    #Servo at a degree
+
     return colour
 
 def dropoff():
@@ -99,3 +108,4 @@ def dropoff():
 def liftup():
     servo.duty_u16(3800)
     utime.sleep(1)
+    

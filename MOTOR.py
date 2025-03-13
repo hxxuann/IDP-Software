@@ -31,11 +31,18 @@ class Motor:
             self.pwm1.duty_u16(int(65535*100/100)) # right sensor touch line, slow down right
             self.pwm2.duty_u16(int(65535*70/100))
 
-    def forward_slow(self):
+    def forward_slow(self, adjust=None):
         self.m1Dir.value(0)
         self.m2Dir.value(0)
-        self.pwm1.duty_u16(int(65535*40/100))
-        self.pwm2.duty_u16(int(65535*40/100))        
+        if adjust == None:
+            self.pwm1.duty_u16(int(65535*40/100)) # speed range 0-100 motor 1
+            self.pwm2.duty_u16(int(65535*40/100))
+        elif adjust == 0:
+            self.pwm1.duty_u16(int(65535*30/100)) # left sensor touch line, slow down left
+            self.pwm2.duty_u16(int(65535*40/100))
+        else:
+            self.pwm1.duty_u16(int(65535*40/100)) # right sensor touch line, slow down right
+            self.pwm2.duty_u16(int(65535*30/100))
             
     def reverse(self):
         self.m1Dir.value(1)
