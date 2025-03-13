@@ -57,8 +57,16 @@ class Motor:
         self.pwm2.duty_u16(int(65535*100/100))
 
     
-    def back(self):
-        self.m1Dir.value(0)
-        self.m2Dir.value(1)
-        self.pwm1.duty_u16(int(65535*80/100))
-        self.pwm2.duty_u16(int(65535*80/100))
+    def pivot(self, dir=0):
+        if dir==0:
+            #pivot right
+            self.m1Dir.value(0)
+            self.m2Dir.value(1)
+            self.pwm1.duty_u16(int(65535*80/100))
+            self.pwm2.duty_u16(int(65535*80/100))
+        elif dir==1:
+            #pivot left
+            self.m1Dir.value(1)
+            self.m2Dir.value(0)
+            self.pwm1.duty_u16(int(65535*80/100))
+            self.pwm2.duty_u16(int(65535*80/100))

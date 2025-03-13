@@ -103,7 +103,8 @@ def turn(diff):
         utime.sleep(1.3)
         while line_left.value()==0:
             pass
-        motor.left()
+        # Left pivot
+        motor.pivot(1)
         while line_right.value()==0:
             pass
         motor.off()
@@ -115,15 +116,16 @@ def turn(diff):
         utime.sleep(1.3)
         while line_right.value()==0:
             pass
-        motor.right()
+        # Right pivot
+        motor.pivot(0)
         while line_left.value()==0:
             pass
         motor.off()
         return
     
     elif diff == 4:
-        # Pivot back 180 degrees
-        motor.back()
+        # Pivot 180 degrees
+        motor.pivot()
         utime.sleep(1.3)
         while line_left.value()==0:
             pass
@@ -164,6 +166,8 @@ def follow_path(path):
             diff = (current_idx - prev_idx) % 4
             
             turn(diff)
+            motor.reverse()
+            utime.sleep(0.5)
             line_tracking()
             location = path[-1]
             motor.off()
@@ -200,7 +204,7 @@ def collect(num):
     return color
 
 def deposit(color):
-    #determine destination and hence path
+    # Determine destination and hence path
     if color in ['blue', 'green']:
         path = shortest_route(location, node_D1)
     elif color in ['yellow', 'red']:
@@ -215,7 +219,7 @@ def deposit(color):
     # Drop off block
     dropoff()
 
-    # turn 180 degrees
+    # Turn 180 degrees
     motor.reverse()
     utime.sleep(1)
     turn(4)
