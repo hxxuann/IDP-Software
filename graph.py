@@ -98,7 +98,7 @@ def line_tracking():
 def turn(diff):
 
     if diff == 1:
-
+        # Right Turn
         motor.right()
         utime.sleep(1.3)
         while line_left.value()==0:
@@ -110,6 +110,7 @@ def turn(diff):
         return
 
     elif diff == 3:
+        # Left Turn
         motor.left()
         utime.sleep(1.3)
         while line_right.value()==0:
@@ -121,7 +122,7 @@ def turn(diff):
         return
     
     elif diff == 4:
-        #Pivot back
+        # Pivot back 180 degrees
         motor.back()
         utime.sleep(1.3)
         while line_left.value()==0:
@@ -155,7 +156,7 @@ def follow_path(path):
     # Iterate over all points except the first one
     for i in range(1, len(path)):
         if i == len(path) - 2:
-            # Last node: turn but do not move
+            # Last node
             current_dir = get_direction(path[i], path[i+1])
             
             prev_idx = direction_map[prev_dir]
@@ -168,7 +169,7 @@ def follow_path(path):
             motor.off()
             return
 
-
+        # Movement for all nodes but last
         current_dir = get_direction(path[i], path[i+1])
         
         prev_idx = direction_map[prev_dir]
@@ -220,6 +221,7 @@ def deposit(color):
     turn(4)
 
 def return_home():
+    # Move from current location to home
     path = shortest_route(location, node_O)
     follow_path(path)
     motor.forward()
