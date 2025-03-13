@@ -166,6 +166,7 @@ def follow_path(path):
             line_tracking()
             location = path[-1]
             motor.off()
+            return
 
 
         current_dir = get_direction(path[i], path[i+1])
