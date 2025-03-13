@@ -78,19 +78,23 @@ servo = PWM(servo_pin)
 #Set PWM frequency
 servo.freq (50)
 #Servo at a degree
-servo.duty_u16(2000)
+servo.duty_u16(3800)
 def pickup():
+    servo.duty_u16(2000)
+    utime.sleep(2)
     while (tof.ping()-36) > 5:
         print(tof.ping()-36)
         motor.forward_slow()
     colour = detect_colour()
     motor.off()
     #Servo at a degree
-    servo.duty_u16(2000)
-    utime.sleep(2)
     servo.duty_u16(2400)
-    utime.sleep(2)
+    utime.sleep(1)
     return colour
 
 def dropoff():
     servo.duty_u16(2000)
+    
+def liftup():
+    servo.duty_u16(3800)
+    utime.sleep(1)
