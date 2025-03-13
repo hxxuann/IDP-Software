@@ -19,7 +19,7 @@ node_A = (-30, 60)
 node_B = (35, 90)
 node_C = (-45, 150)
 node_D = (40, 155)
-collections_points = [node_C, node_D, node_A, node_B]
+collections_points = [node_A, node_C, node_D, node_B]
 node_O = (0, 0) # Origin/Starting point
 
 # Define the allowed movements on the grid
@@ -103,6 +103,9 @@ def turn(diff):
         utime.sleep(1.3)
         while line_left.value()==0:
             pass
+        motor.left()
+        while line_right.value()==0:
+            pass
         motor.off()
         return
 
@@ -110,6 +113,9 @@ def turn(diff):
         motor.left()
         utime.sleep(1.3)
         while line_right.value()==0:
+            pass
+        motor.right()
+        while line_left.value()==0:
             pass
         motor.off()
         return
@@ -191,11 +197,6 @@ def collect(num):
         
     # Picks up block
     color = pickup()
-
-    # Reverse before pivoting for block C and D
-    if num in [0,1]:
-        motor.reverse()
-        utime.sleep(1)
 
     # Turn 180 degrees
     turn(4)
