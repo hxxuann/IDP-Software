@@ -166,16 +166,7 @@ def follow_path(path):
             line_tracking()
             location = path[-1]
             motor.off()
-            while True:
-                if junction_right.value()==1:
-                    while junction_left.value()==0:
-                        motor.right()
-                if junction_left.value()==1:
-                    while junction_right.value()==0:
-                        motor.left()
-                motor.off()
-                return
-    
+
 
         current_dir = get_direction(path[i], path[i+1])
         
