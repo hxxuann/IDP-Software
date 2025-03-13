@@ -148,8 +148,16 @@ def turn(diff, last=False):
             return
     
     elif diff == 4:
-        # Pivot 180 degrees
+        # Pivot 180 degrees right
         motor.pivot()
+        utime.sleep(1.3)
+        while line_left.value()==0:
+            pass
+        motor.off()
+        return  
+    elif diff == 5:
+        # Pivot 180 degrees left
+        motor.pivot(1)
         utime.sleep(1.3)
         while line_left.value()==0:
             pass
@@ -194,7 +202,6 @@ def follow_path(path):
             utime.sleep(0.3)
             motor.off()
             utime.sleep(0.2)
-            line_tracking()
             location = path[-1]
             motor.off()
             return
@@ -237,14 +244,17 @@ def deposit(color):
     # Determine destination and hence path
     if color in ['blue', 'green']:
         path = shortest_route(location, node_D1)
+        dir=5
     elif color in ['yellow', 'red']:
         path = shortest_route(location, node_D2)
+        dir=4
     else:
         print("Invalid color")
         return
     
     print(path)
     follow_path(path)
+    line_tracking()
 
     # Drop off block
     dropoff()
@@ -252,7 +262,7 @@ def deposit(color):
     # Turn 180 degrees
     motor.reverse()
     utime.sleep(1)
-    turn(4)
+    turn(dir)
     liftup()
 
 def return_home():
