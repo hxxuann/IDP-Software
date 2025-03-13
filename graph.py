@@ -166,6 +166,8 @@ def follow_path(path):
             turn(diff)
             line_tracking()
             location = path[-1]
+            motor.reverse()
+            utime.sleep(0.3)
             motor.off()
             return
 
