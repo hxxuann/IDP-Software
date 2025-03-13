@@ -226,3 +226,5 @@ def return_home():
     follow_path(path)
     motor.forward()
     utime.sleep(0.5)
+    motor.off()
+    led.value(0)
