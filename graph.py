@@ -19,7 +19,7 @@ node_A = (-30, 60)
 node_B = (35, 90)
 node_C = (-45, 150)
 node_D = (40, 155)
-collections_points = [node_A, node_C, node_D, node_B]
+collection_points = [node_A, node_B, node_C, node_D]
 node_O = (0, 0) # Origin/Starting point
 
 # Define the allowed movements on the grid
@@ -192,7 +192,7 @@ def follow_path(path):
 
 # Moves from current location to input location, picks up box and pivots 180 degrees
 def collect(num):
-    path = shortest_route(location, collections_points[num])
+    path = shortest_route(location, collection_points[num])
     print(path)
     follow_path(path)
     motor.reverse()
@@ -202,13 +202,13 @@ def collect(num):
     color = pickup()
 
     # Turn 180 degrees
-
-    motor.reverse()
-    utime.sleep(0.3)
+    if collection_points[num] not in [node_B, node_D]:
+        motor.reverse()
+        utime.sleep(0.5)
     motor.off()
     turn(4)
     motor.reverse()
-    utime.sleep(1)
+    utime.sleep(0.5)
     motor.off()
     
     return color
@@ -245,6 +245,6 @@ def return_home():
     path = shortest_route(location, node_O)
     follow_path(path)
     motor.forward()
-    utime.sleep(0.5)
+    utime.sleep(1.3)
     motor.off()
     led.value(0)

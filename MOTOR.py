@@ -35,14 +35,14 @@ class Motor:
         self.m1Dir.value(0)
         self.m2Dir.value(0)
         if adjust == None:
-            self.pwm1.duty_u16(int(65535*40/100)) # speed range 0-100 motor 1
-            self.pwm2.duty_u16(int(65535*40/100))
+            self.pwm1.duty_u16(int(65535*60/100)) # speed range 0-100 motor 1
+            self.pwm2.duty_u16(int(65535*60/100))
         elif adjust == 0:
-            self.pwm1.duty_u16(int(65535*20/100)) # left sensor touch line, slow down left
-            self.pwm2.duty_u16(int(65535*40/100))
+            self.pwm1.duty_u16(int(65535*45/100)) # left sensor touch line, slow down left
+            self.pwm2.duty_u16(int(65535*60/100))
         else:
-            self.pwm1.duty_u16(int(65535*40/100)) # right sensor touch line, slow down right
-            self.pwm2.duty_u16(int(65535*30/100))
+            self.pwm1.duty_u16(int(65535*60/100)) # right sensor touch line, slow down right
+            self.pwm2.duty_u16(int(65535*45/100))
             
     def reverse(self):
         self.m1Dir.value(1)
@@ -56,8 +56,6 @@ class Motor:
         self.m2Dir.value(dir)
         self.pwm1.duty_u16(int(65535*100/100))
         self.pwm2.duty_u16(int(65535*0/100))
-
-
 
     
     def left(self, dir=0):

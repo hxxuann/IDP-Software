@@ -81,7 +81,7 @@ servo.freq (50)
 servo.duty_u16(3800)
 
 def pickup():
-    servo.duty_u16(2000)
+    servo.duty_u16(1950)
     utime.sleep(1)
     motor.forward_slow(0)
     utime.sleep(0.5)
@@ -103,7 +103,7 @@ def pickup():
     return colour
 
 def dropoff():
-    servo.duty_u16(2000)
+    servo.duty_u16(1950)
     
 def liftup():
     servo.duty_u16(3800)
