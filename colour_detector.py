@@ -83,7 +83,7 @@ servo.duty_u16(3800)
 def pickup():
     servo.duty_u16(2000)
     utime.sleep(1)
-    motor.forward_slow()
+    motor.forward_slow(0)
     utime.sleep(0.5)
     print(tof.ping()-36)
     while (tof.ping()-36) > 8:
