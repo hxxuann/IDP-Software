@@ -7,7 +7,7 @@ from config import button, led, servo_pin
 
 tasks = 4
 test_color = ['blue', 'red']
-start = utime.time()
+
 
 motor=Motor()
 servo = PWM(servo_pin)
@@ -20,11 +20,11 @@ servo.duty_u16(3800)
 def main():
     motor.forward()
     utime.sleep(1)
-    while utime.time()-start<270:
+    while utime.time()-start<260:
         for i in range(tasks):
             end = utime.time()
             print(end-start)
-            if end-start>270:
+            if end-start>260:
                 break
             color = collect(i)
             deposit(color)
@@ -37,6 +37,7 @@ def main():
 try:
     while True:
         if button.value()==1:
+            start = utime.time()
             main()
 # except Exception as e:
 #     print(e)
