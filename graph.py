@@ -79,6 +79,7 @@ def shortest_route(A, B):
     return bfs_path(graph, A, B)
 
 def line_tracking():
+    # Movement control along a straight line
     global last_junction_time
     debounce_time = 200  # milliseconds
     while True:
@@ -95,8 +96,8 @@ def line_tracking():
                 last_junction_time = current_time
                 return
 
-def turn(diff, last=False):
-
+def turn(diff):
+    # Controls direction of turning
     if diff == 1:
         # Right Turn
         motor.right()
@@ -141,8 +142,9 @@ def turn(diff, last=False):
 
     
 def follow_path(path):
-    # Helper function to get unit direction from p1 to p2
+
     def get_direction(p1, p2):
+        # Helper function to get unit direction from p1 to p2
         dx = p2[0] - p1[0]
         dy = p2[1] - p1[1]
         if dx != 0:
@@ -201,7 +203,7 @@ def collect(num):
     # Picks up block
     color = pickup()
 
-    # Turn 180 degrees
+    # Pivot 180 degrees
     if collection_points[num] not in [node_B, node_D]:
         motor.reverse()
         utime.sleep(0.5)

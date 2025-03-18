@@ -4,6 +4,7 @@ from machine import PWM, I2C
 from vl53l0x import VL53L0X
 from tcs34725 import TCS34725, html_rgb
 from config import colour_sda, colour_scl, tof_scl, tof_sda, servo_pin, line_left, line_right
+
 # colour sensor
 i2c_bus = I2C(1, sda=colour_sda, scl=colour_scl)
 TCS34725_ADDRESS = 0x29
@@ -56,8 +57,10 @@ def scan_sensor(i2c_bus):
 # while True:
 #     print(tcs.read('raw'))
 #     sleep_ms(500)
-#     
+
+
 def detect_colour():
+    # Color detector
     color = html_rgb(tcs.read('raw'))
     print(color)
     red=color[0]
@@ -74,6 +77,7 @@ def detect_colour():
     else:
         return "green"
         # return "invalid colour"    
+
 servo = PWM(servo_pin)
 #Set PWM frequency
 servo.freq (50)
@@ -81,6 +85,7 @@ servo.freq (50)
 servo.duty_u16(3800)
 
 def pickup():
+    # Pickup sequence after robot reaches destination
     servo.duty_u16(1950)
     utime.sleep(1)
     motor.forward_slow(0)
@@ -95,7 +100,7 @@ def pickup():
         else:
             motor.forward_slow()
     motor.off()
-    servo.duty_u16(2400)
+    servo.duty_u16(2500)
     utime.sleep(1)
     colour = detect_colour()
     #Servo at a degree
@@ -103,9 +108,11 @@ def pickup():
     return colour
 
 def dropoff():
+    # Lower servo arm, drop off box
     servo.duty_u16(1950)
     
 def liftup():
+    # Lift up servo arm during path finding
     servo.duty_u16(3800)
     utime.sleep(1)
     

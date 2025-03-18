@@ -1,4 +1,6 @@
 from machine import Pin
+
+# List of pins
 m1Dir = Pin(4, Pin.OUT)
 pwm1 = Pin(5)
 pwm2 = Pin(6)

@@ -18,8 +18,11 @@ servo.duty_u16(3800)
 
 
 def main():
+    # Move out of starting box
     motor.forward()
     utime.sleep(1)
+
+    # Timer to move back to starting point when time remaining < 40s
     while utime.time()-start<260:
         for i in range(tasks):
             end = utime.time()
@@ -36,6 +39,7 @@ def main():
 
 try:
     while True:
+        # Start main after button pressed
         if button.value()==1:
             start = utime.time()
             main()
@@ -44,5 +48,6 @@ try:
 #     led.value(0)
 #     motor.off()
 except:
+    # Stop Robot
     led.value(0)
     motor.off()
